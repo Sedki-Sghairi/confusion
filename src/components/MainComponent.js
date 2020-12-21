@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import Contact from './ContactComponent'
-
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent'
