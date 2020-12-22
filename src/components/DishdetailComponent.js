@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Breadcrumb, BreadcrumbItem, Row, Col, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import React, { Component } from 'react'
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -71,8 +72,6 @@ class CommentForm extends Component {
                                         />
                                 </Col>
                         </Row>
-       
-         
                                 <Row className="form-group">
                                 <Label htmlFor="message" md={12}>Comment</Label>
                                 <Col md={12}>
@@ -110,7 +109,6 @@ function RenderDish({dish}) {
   }
 
   function RenderComments({comments, addComment, dishId}) {
-    
     if (comments != null)
     return(
         <>
@@ -141,7 +139,25 @@ else
   }
 
   const  DishDetail = (props) => {
-      console.log(props)
+    if (props.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null){
     return (
         <div className='container'>
            <div className="row">
@@ -161,16 +177,15 @@ else
              {props.dish && <RenderDish dish = {props.dish}/>}
             </div>
             <div className="col-12 col-md-5 m-1">
-             {(props.comments) && <RenderComments comments = {props.comments}/>}
-             <RenderComments comments={props.comments}
-        addComment={props.addComment}
-        dishId={props.dish.id}
-      />            </div>
+             {(props.comments) &&
+             <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id}/>           
+            }
+            </div>
             </div>
         </div>
         
     )
-    
+    }
   }
 
 export default DishDetail;
