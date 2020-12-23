@@ -8,10 +8,9 @@ import About from './AboutCompoent'
 import DishDetail from './DishdetailComponent';
 import { Switch, Route, Redirect, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-
 import { actions } from 'react-redux-form';
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
-
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const mapDispatchToProps = dispatch => ({
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
@@ -70,7 +69,8 @@ class Main extends Component {
     return ( 
       <div>
         <Header />
-        <div>
+        <TransitionGroup>
+          <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
           <Switch>
               <Route path='/home' component={HomePage} />
               <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />} />
@@ -79,7 +79,8 @@ class Main extends Component {
               <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
               <Redirect to="/home" />
           </Switch>
-        </div>
+          </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
