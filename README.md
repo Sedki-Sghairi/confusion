@@ -1,4 +1,4 @@
-#this is an academic work.
+#this is an academic work.\n
 to run:
 npm install (dependencies)/
 build a local server: [json-server](https://github.com/Sedki-Sghairi/json-server)/
